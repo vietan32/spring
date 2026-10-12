@@ -37,4 +37,13 @@ public class CustomerController {
 		repository.deleteById(id);
 		return new ResponseEntity<>("Deleted customer with ID: " + id, HttpStatus.OK);
 	}
+
+	@GetMapping("/search")
+	public ResponseEntity<List<Customer>> getCustomersByLastName(@RequestParam("lastName") String lastName) {
+		List<Customer> customers = repository.findByLastName(lastName);
+		if (customers.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<>(customers, HttpStatus.OK);
+	}
 }
